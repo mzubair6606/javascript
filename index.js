@@ -1,3 +1,5 @@
+// require("./generator/example1");
+
 function delayedPromise(delayMs, responseData) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -10,7 +12,7 @@ function delayedPromise(delayMs, responseData) {
 
 // Example usage:
 const responseData = { message: "Hello, world!" };
-const delayMs = 2000;
+const delayMs = 100;
 
 // Generator function to fetch data from multiple URLs
 function* fetchData(urls) {
@@ -22,8 +24,8 @@ function* fetchData(urls) {
       const promise = delayedPromise(delayMs, responseData);
       yield promise;
 
-      const responseData1 = { message: "Hello, world!" };
-      const delayMs1 = 1000;
+      const responseData1 = { message: "Hello, Pakistan!" };
+      const delayMs1 = 100;
       const promise1 = delayedPromise(delayMs1, responseData1);
       yield promise1;
     } catch (error) {
@@ -37,8 +39,8 @@ function* fetchData(urls) {
 // Example usage: Fetch data from multiple URLs
 const urls = [
   "https://jsonplaceholder.typicode.com/posts/1",
-  //   "https://jsonplaceholder.typicode.com/posts/2",
-  //   "https://jsonplaceholder.typicode.com/posts/3",
+  "https://jsonplaceholder.typicode.com/posts/2",
+  "https://jsonplaceholder.typicode.com/posts/3",
 ];
 
 // Create iterator from generator function
