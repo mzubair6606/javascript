@@ -2,11 +2,12 @@
 function* fetchData(urls) {
   for (const url of urls) {
     try {
-      const response = yield fetch(url); // Pause execution until fetch operation completes
-      const data = yield response.json(); // Pause execution until JSON parsing completes
-      console.log(`Data fetched from ${url}:`, data);
+      console.log(`Fetching data from ${url}`);
+      yield fetch(url); // Pause execution until fetch operation completes
     } catch (error) {
-      console.error(`Error fetching data from ${url}:`, error);
+      console.error(`Error fetching data from ${url}:`, error.message);
+      // If there's an error, continue to the next iteration
+      continue;
     }
   }
 }
@@ -23,17 +24,32 @@ const iterator = fetchData(urls);
 
 // Define a function to recursively iterate over the generator
 function iterate(iterator, iteration) {
-  if (iteration.done) {
-    console.log("All iterations completed");
-    return;
+  try {
+    if (iteration.done) {
+      console.log("All iterations completed");
+      return;
+    }
+
+    const promise = iteration.value; // Value returned by the yield statement (a Promise)
+
+    // Process the Promise returned by the yield statement
+    promise
+      .then((response) => {
+        return response.json(); // Parse JSON data from response
+      })
+      .then((data) => {
+        console.log("Resuming iteration with Parsed data:", data);
+        // iterator.next(data); // Pass the parsed data to the generator and continue iteration
+        // Start iterating over the generator again to recursively
+        iterate(iterator, iterator.next());
+      })
+      .catch((error) => {
+        console.error("Error caught during iteration:", error);
+        iterator.throw(error); // Pass any errors to the generator and continue iteration
+      });
+  } catch (error) {
+    console.error("Unexpected error during iteration:", error);
   }
-
-  const promise = iteration.value; // Value returned by the yield statement (a Promise)
-
-  // Process the Promise returned by the yield statement
-  promise
-    .then((data) => iterator.next(data)) // Pass the resolved data to the generator and continue iteration
-    .catch((error) => iterator.throw(error)); // Pass any errors to the generator and continue iteration
 }
 
 // Start iterating over the generator
