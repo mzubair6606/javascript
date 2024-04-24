@@ -11,6 +11,24 @@
     });
   }
 
+  function* fetchDataFromURL(url) {
+    try {
+      console.log(`Fetching data from ${url}`);
+      yield fetch(url); // Pause execution until fetch operation completes
+
+      const promise = delayedPromise(delayMs, responseData);
+      yield promise;
+
+      const responseData1 = { message: "Hello, Pakistan!" };
+      const delayMs1 = 100;
+      const promise1 = delayedPromise(delayMs1, responseData1);
+      yield promise1;
+    } catch (error) {
+      console.error(`Error fetching data from ${url}:`, error.message);
+      // If there's an error, continue to the next iteration
+    }
+  }
+
   // Example usage:
   const responseData = { message: "Hello, world!" };
   const delayMs = 100;
@@ -18,22 +36,7 @@
   // Generator function to fetch data from multiple URLs
   function* fetchData(urls) {
     for (const url of urls) {
-      try {
-        console.log(`Fetching data from ${url}`);
-        yield fetch(url); // Pause execution until fetch operation completes
-
-        const promise = delayedPromise(delayMs, responseData);
-        yield promise;
-
-        const responseData1 = { message: "Hello, Pakistan!" };
-        const delayMs1 = 100;
-        const promise1 = delayedPromise(delayMs1, responseData1);
-        yield promise1;
-      } catch (error) {
-        console.error(`Error fetching data from ${url}:`, error.message);
-        // If there's an error, continue to the next iteration
-        continue;
-      }
+      yield* fetchDataFromURL(url);
     }
   }
 

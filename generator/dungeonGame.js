@@ -21,7 +21,7 @@ function* exploreRoom(room) {
   }
 
   // Simulate leaving the room
-  yield `Leaving ${room.name}...`;
+  yield* `Leaving ${room.name}...`;
 }
 
 // Define the dungeon layout
