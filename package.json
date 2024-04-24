@@ -1,0 +1,20 @@
+{
+  "name": "javascript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start":"nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/mzubair6606/javascript.git"
+  },
+  "author": "zubair",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mzubair6606/javascript/issues"
+  },
+  "homepage": "https://github.com/mzubair6606/javascript#readme"
+}
