@@ -1,71 +1,63 @@
-// Simulate fetching data from a source
-function fetchData(source) {
+// Simulate fetching data from an API
+function fetchDataFromAPI(api) {
   return new Promise((resolve, reject) => {
     // Simulate fetching data asynchronously
     setTimeout(() => {
-      const data = `Data from ${source}`;
+      const data = `Data from ${api}`;
       resolve(data);
-    }, 1000); // Random delay for simulation
+    }, Math.random() * 1000); // Random delay for simulation
+
+    // Handle errors
+    // For simplicity, let's assume there are no errors in this simulation
   });
 }
 
-// Simulate applying a transformation to the data
-function* applyTransformation(data) {
-  console.log(`Applying transformation to data: ${data}`);
-
-  // Simulate applying transformation
-  yield `Transformed data: ${data.toUpperCase()}`;
+// Simulate processing data
+function processData(data) {
+  console.log(`Processing data: ${data}`);
+  // Simulate processing data
+  return `Processed data: ${data.toUpperCase()}`;
 }
 
-// Simulate performing analysis on the transformed data
-function* performAnalysis(transformedData) {
-  console.log(`Performing analysis on transformed data: ${transformedData}`);
-
-  // Simulate performing analysis
-  yield `Analysis result: Length of transformed data is ${transformedData.length}`;
+// Simulate performing an operation
+function performOperation(operation) {
+  console.log(`Performing operation: ${operation}`);
+  // Simulate performing operation
+  return `Operation executed: ${operation}`;
 }
 
-// Define the data processing pipeline
-async function* dataProcessingPipeline(sources) {
-  for (const source of sources) {
-    // Fetch data from source and wait for the promise to resolve
-    const data = await fetchData(source);
+// Define a list of tasks to be executed
+const tasks = [
+  { api: "API 1", operation: "Operation 1" },
+  { api: "API 2", operation: "Operation 2" },
+  { api: "API 3", operation: "Operation 3" },
+];
 
-    console.log("data => ", data);
-
-    // // Apply transformation to data
-    const transformedData = yield* applyTransformation(data);
-
-    console.log("transformedData => ", transformedData);
-
-    // // Perform analysis on transformed data
-    // yield* performAnalysis(transformedData);
-  }
-}
-
-// Define data sources
-const sources = ["Source A", "Source B", "Source C"];
-
-// Create iterator from the data processing pipeline generator function
-const iterator = dataProcessingPipeline(sources);
-
-// Define a function to recursively iterate over the generator
-function iterate(iterator, iteration) {
+// Define a function to execute tasks concurrently
+async function executeTasks(tasks) {
   try {
-    if (iteration.done) {
-      console.log("Data processing pipeline completed");
-      return;
-    }
+    // Execute tasks concurrently using Promise.all
+    const results = await Promise.all(
+      tasks.map(async (task) => {
+        // Fetch data from API
+        const fetchedData = await fetchDataFromAPI(task.api);
+        // Process data
+        const processedData = processData(fetchedData);
+        // Perform operation
+        const operationResult = performOperation(task.operation);
+        return [processedData, operationResult];
+      })
+    );
 
-    const step = iteration.value; // Value returned by the yield statement
-    console.log("step", step);
-
-    // Start iterating over the generator again to proceed to the next step
-    iterate(iterator, iterator.next());
+    // Log results
+    results.forEach(([processedData, operationResult]) => {
+      console.log(processedData);
+      console.log(operationResult);
+    });
   } catch (error) {
-    console.error("Unexpected error during data processing:", error);
+    console.error("Error during task execution:", error);
   }
 }
 
-// Start the data processing pipeline
-iterate(iterator, iterator.next());
+// Start executing tasks
+executeTasks(tasks);
