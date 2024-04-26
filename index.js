@@ -4,4 +4,5 @@
 // require("./generator/dataProcessing");
 
 // array method
-require("./array/unionIntersection");
+// require("./array/unionIntersection");
+require("./array/other");
