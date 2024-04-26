@@ -5,7 +5,7 @@ function fetchDataFromAPI(api) {
     setTimeout(() => {
       const data = `Data from ${api}`;
       resolve(data);
-    }, Math.random() * 1000); // Random delay for simulation
+    }, 1000); // Random delay for simulation
 
     // Handle errors
     // For simplicity, let's assume there are no errors in this simulation
