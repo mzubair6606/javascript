@@ -4,8 +4,6 @@ function union(params) {
   const unionArray = [...array1, ...array2];
   const uniqueArray = [];
 
-  //   console.log("union array => ", unionArray, unionArray.length);
-
   for (i = 0; i < unionArray.length; i++) {
     let a = unionArray[i];
 
@@ -20,11 +18,11 @@ function union(params) {
     }
 
     if (!isDuplicate) {
-      unionArray.push(a);
+      uniqueArray.push(a);
     }
   }
 
-  return unionArray;
+  return uniqueArray;
 }
 
 const array1 = [1, 2, 3, 4, 5];
