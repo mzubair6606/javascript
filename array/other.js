@@ -31,15 +31,32 @@ function arrayAverage(array) {
 // Output: ['c', 'd', 'e', 'a', 'b']
 
 function rotateArray(array, number) {
-  const length = array.length -1;
+  const length = array.length;
   const rotation = [...array];
 
+  for (i = 0; i < rotation.length; i++) {
+    let positionInArray = indexFormula(i);
+
+    console.log({ positionInArray, i });
+
+    rotation.splice(positionInArray, 1, array[i]);
+  }
+
+  return rotation;
+
   function indexFormula(index) {
+    let requestedIndex = number + index;
+    let indexOfLastElement = length - 1;
 
+    let subIndex = indexOfLastElement - requestedIndex;
 
-    let a = index;
-
-    if(length > )
+    if (subIndex === 0 || subIndex > 0) {
+      return requestedIndex;
+    } else if (subIndex < 0) {
+      return requestedIndex - indexOfLastElement - 1;
+    }
     //
   }
 }
+
+console.log("rotateArray => ", rotateArray(["a", "b", "c", "d", "e"], 3));

@@ -5,4 +5,5 @@
 
 // array method
 // require("./array/unionIntersection");
-require("./array/other");
+// require("./array/other");
+require("./array/other1");
