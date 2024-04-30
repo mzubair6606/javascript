@@ -67,7 +67,7 @@ function sortArray(arrayToSort) {
   return sortedArray;
 }
 
-console.log("sortArray => ", sortArray([3, 1, 5, 2, 4]));
+// console.log("sortArray => ", sortArray([3, 1, 5, 2, 4]));
 
 // Problem 8: Array Flattening:
 // Write a function that takes a nested array as input and returns a flattened version of the array.
@@ -78,3 +78,44 @@ console.log("sortArray => ", sortArray([3, 1, 5, 2, 4]));
 
 // flattenArray(['a', ['b', 'c'], 'd', ['e', ['f', 'g']]]);
 // Output: ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+
+function flattenArray(array) {
+  //
+
+  let flattenedArray = [];
+
+  let addElementToArray = (element) => {
+    flattenedArray.push(element);
+  };
+
+  for (i = 0; i < array.length; i++) {
+    let element = array[i];
+
+    let isArray = Array.isArray(element);
+
+    if (isArray) {
+      for (j = 0; j < element.length; j++) {
+        let subElement = element[j];
+        let isArray = Array.isArray(subElement);
+
+        if (isArray) {
+          for (k = 0; k < subElement.length; k++) {
+            let subElement1 = subElement[k];
+            addElementToArray(subElement1);
+          }
+        } else {
+          addElementToArray(subElement);
+        }
+      }
+    } else {
+      addElementToArray(element);
+    }
+  }
+
+  return flattenedArray;
+}
+
+console.log(
+  "arrayFlattening => ",
+  flattenArray(["a", ["b", "c"], "d", ["e", ["f", "g"]]])
+);
