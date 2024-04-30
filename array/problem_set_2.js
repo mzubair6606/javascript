@@ -68,12 +68,12 @@ function countFrequencyFunc(array) {
   return occurrence;
 }
 
-console.log(
-  "countFrequencyFunc => ",
-  countFrequencyFunc([
-    1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-  ])
-);
+// console.log(
+//   "countFrequencyFunc => ",
+//   countFrequencyFunc([
+//     1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+//   ])
+// );
 
 // Problem 3: Array Partitioning
 // Write a function that takes an array and a partition size as input and partitions the array into subarrays of the specified size. The last partition may contain fewer elements than the specified size.
@@ -81,3 +81,23 @@ console.log(
 // Example:
 // partitionArray([1, 2, 3, 4, 5, 6, 7, 8], 3);
 // Output: [[1, 2, 3], [4, 5, 6], [7, 8]]
+
+function arrayPartitioning(array, numberOfPart) {
+  let chunkSize = Math.ceil(array.length / numberOfPart);
+
+  let finalArray = [];
+
+  for (i = 0; i < chunkSize; i++) {
+    let startIndex = i * chunkSize;
+    let lastIndex = startIndex + chunkSize;
+
+    let chunk = array.slice(startIndex, lastIndex);
+    finalArray.push(chunk);
+  }
+  return finalArray;
+}
+
+console.log(
+  "arrayPartitioning => ",
+  arrayPartitioning([1, 2, 3, 4, 5, 6, 7, 8], 3)
+);
