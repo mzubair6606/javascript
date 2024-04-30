@@ -88,29 +88,16 @@ function flattenArray(array) {
     flattenedArray.push(element);
   };
 
-  for (i = 0; i < array.length; i++) {
-    let element = array[i];
-
-    let isArray = Array.isArray(element);
-
-    if (isArray) {
-      for (j = 0; j < element.length; j++) {
-        let subElement = element[j];
-        let isArray = Array.isArray(subElement);
-
-        if (isArray) {
-          for (k = 0; k < subElement.length; k++) {
-            let subElement1 = subElement[k];
-            addElementToArray(subElement1);
-          }
-        } else {
-          addElementToArray(subElement);
-        }
+  const flatten = (array) => {
+    for (i = 0; i < array.length; i++) {
+      if (Array.isArray(array[i])) {
+        flatten(array[i]);
+      } else {
+        addElementToArray(array[i]);
       }
-    } else {
-      addElementToArray(element);
     }
-  }
+  };
+  flatten(array);
 
   return flattenedArray;
 }
